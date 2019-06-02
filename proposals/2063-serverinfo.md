@@ -24,6 +24,10 @@ Right now the following is available:
 Technically `_matrix/key/v2/query` can be used as a crude 
 connectivity-check tool.
 
+The proposed endpoint(s) would provide a standardised **possibility** 
+for admins to publish the data helping to pick their servers, it is 
+not compulsory, thus does not guarantee that such data is available.
+
 ## Proposal
 
 The following information would be available (for anyone without any 
@@ -46,15 +50,6 @@ very limited fashion (eg. only already known servers and skip anything
 which is backed off already, etc.), since it could provide info on 
 connectivity (like when a server is available on IPv6 but cannot reach 
 IPv4 servers).
-
-## Tradeoffs
-
-This would provide a standardised **possibility** for admins to publish 
-the data helping to pick their servers, it is not compulsory, thus does 
-not guarantee that such data is available.
-
-*Active users counter* may need some logic (and thus cpu cycles) to 
-calculate.
 
 ## Security considerations
 
