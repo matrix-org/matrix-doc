@@ -37,7 +37,7 @@ pre-arranged state):
 * country of the server (if applicable)
 
 Apart from the *first one* all endpoints can be "legally" disabled and 
-result a *NOT_DISCLOSED* error, so the admin can decide not to publish 
+result a `M_FORBIDDEN` error, so the admin can decide not to publish 
 the data for whatever reason. 
 
 It could be useful to provide a - heavily rate limited - *connectivity 
