@@ -41,6 +41,31 @@ Apart from the *first one* all endpoints can be "legally" disabled and
 result a `M_FORBIDDEN` error, so the admin can decide not to publish 
 the data for whatever reason. 
 
+### GET /_matrix/federation/v1/server_data
+
+* Rate-limited: Yes
+* Requires auth: No
+
+Requires no parameters.
+
+Response:
+
+```json
+{
+  "server_data": {
+    "m.open_registrations": true,
+    "m.uptime": 63072000,
+    "m.registered_users": 4,
+  }
+}
+```
+* `open_registrations`: `true` if the server accepts new account registrations
+  (open server); this response field is **required**.
+* `uptime` in *seconds* (possible to see whether there was a recent restart,
+  upgrade)
+  
+### Data acquired by other means
+
 The following data will be (or ought to be) provided by pull#1929 
 (MSC 1929) through static `.well-known` method:
 
@@ -55,12 +80,11 @@ working federation, but it shall be covered by a specific proposal later.
 ## Security considerations
 
 Since servers are reachable through public methods these don't really 
-open up attack surfaces; most replies are static data. Dynamic results 
-shall be protected from DoS (rate limiting, possibly simply globally).
+open up attack surfaces; replies are quasi-static data. 
 
 ## Conclusion
 
 Implementing these endpoints would make it possible to generate 
-automated server lists with data suited to make educated guesses about 
+*automated server lists* with data suited to make educated guesses about 
 server suitability for new users.
 
