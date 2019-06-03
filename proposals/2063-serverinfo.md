@@ -36,20 +36,21 @@ pre-arranged state):
 * whether the HS supports (open) registrations
 * number of registered users / active users in the last *week/month*
 * server uptime
-* server admin contact (this is covered by pull#1929)
-* server description / blurb
-* country of the server (if applicable)
 
 Apart from the *first one* all endpoints can be "legally" disabled and 
 result a `M_FORBIDDEN` error, so the admin can decide not to publish 
 the data for whatever reason. 
 
-It could be useful to provide a - heavily rate limited - *connectivity 
-endpoint*, which would make it possible to "ping" other servers, in a 
-very limited fashion (eg. only already known servers and skip anything 
-which is backed off already, etc.), since it could provide info on 
-connectivity (like when a server is available on IPv6 but cannot reach 
-IPv4 servers).
+The following data will be (or ought to be) provided by pull#1929 
+(MSC 1929) through static `.well-known` method:
+
+* server human readable name
+* server description / blurb
+* country of the server (if applicable)
+* server admin contact
+
+There ought to be a way to gather *server connectivity data*, to check
+working federation, but it shall be covered by a specific proposal later.
 
 ## Security considerations
 
