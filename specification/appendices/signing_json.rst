@@ -28,9 +28,11 @@ adding the signature to the original JSON object.
 Canonical JSON
 ~~~~~~~~~~~~~~
 
-We define the canonical JSON encoding for a value to be the shortest UTF-8 JSON
-encoding with dictionary keys lexicographically sorted by unicode codepoint.
-Numbers in the JSON must be integers in the range ``[-(2**53)+1, (2**53)-1]``.
+We define the canonical JSON encoding as:
+
+- A JSON value with the shortest UTF-8 string.
+- Encoded with dictionary keys lexicographically sorted by unicode codepoint.
+- With numbers in the JSON as integers in the range ``[-(2**53)+1, (2**53)-1]``.
 
 We pick UTF-8 as the encoding as it should be available to all platforms and
 JSON received from the network is likely to be already encoded using UTF-8.
