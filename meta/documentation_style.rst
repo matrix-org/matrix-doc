@@ -22,7 +22,7 @@ complete specification to be merged correctly. These characters are:
 - ``~``
 - ``+``
 - ``^``
-- \ `````
+- \`````
 - ``@``
 - ``:``
 
