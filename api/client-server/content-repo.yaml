@@ -41,6 +41,7 @@ paths:
         - in: header
           name: Content-Type
           type: string
+          required: true
           description: The content type of the file being uploaded
           x-example: "application/pdf"
         - in: query
