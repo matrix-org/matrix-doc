@@ -1,0 +1,33 @@
+---
+allOf:
+  - $ref: core-event-schema/event.yaml
+description: Defines all of the user's account widgets as a map of widget ID to ``AccountWidget``.
+properties:
+  content:
+    type: object
+    additionalProperties:
+      type: object
+      title: AccountWidget
+      properties:
+        type:
+          enum: ['m.widget']
+          type: string
+        state_key:
+          type: string
+          description: The widget's ID.
+        sender:
+          type: string
+          description: The current user's ID.
+        content:
+          allOf:
+            - $ref: ../../api/widgets/definitions/shared_props.yaml
+      required:
+        - type
+        - state_key
+        - sender
+        - content
+  type:
+    enum:
+      - m.widgets
+    type: string
+type: object

@@ -25,6 +25,10 @@ targets:
     files:
       - push_gateway.rst
     version_label: "%PUSH_GATEWAY_RELEASE_LABEL%"
+  widgets:
+    files:
+      - widgets.rst
+    version_label: "%WIDGETS_RELEASE_LABEL%"
   rooms@v1: # this is translated to be rooms/v1.html
     files:
       - rooms/v1.rst

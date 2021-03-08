@@ -1,0 +1,13 @@
+{
+    "creatorUserId": "@alice:example.org",
+    "data": {
+        "custom-key": "This is a custom key",
+        "title": "This is a witty description for the widget"
+    },
+    "id": "20200827_WidgetExample",
+    "name": "My Cool Widget",
+    "type": "m.custom",
+    "url": "https://example.org/my/widget.html?roomId=$matrix_room_id",
+    "waitForIframeLoad": true,
+    "avatar_url": "mxc://example.org/aaabbbccc"
+}

@@ -531,6 +531,10 @@ if __name__ == '__main__':
         help="The identity service release tag to generate, e.g. r1.2"
     )
     parser.add_argument(
+        "--widgets_release", "-w", action="store", default="unstable",
+        help="The widget release tag to generate, e.g. r1.2"
+    )
+    parser.add_argument(
         "--list_targets", action="store_true",
         help="Do not update the specification. Instead print a list of targets.",
     )
@@ -556,6 +560,7 @@ if __name__ == '__main__':
         "%APPSERVICE_RELEASE_LABEL%": args.appservice_release,
         "%IDENTITY_RELEASE_LABEL%": args.identity_release,
         "%PUSH_GATEWAY_RELEASE_LABEL%": args.push_gateway_release,
+        "%WIDGETS_RELEASE_LABEL%": args.widgets_release,
     }
 
     exit (main(args.target or ["all"], args.dest, args.nodelete, substitutions))

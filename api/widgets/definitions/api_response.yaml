@@ -1,0 +1,51 @@
+# Copyright 2020 The Matrix.org Foundation C.I.C.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type: object
+title: WidgetApiResponse
+description: |-
+  Schema definition for a widget response object over the Widget API.
+
+  .. Note::
+     This is intentionally designed to allow API users to copy the request object
+     verbatim and simply append their ``response``.
+
+allOf:
+  - $ref: "./api_request.yaml"
+properties:
+  response:
+    type: object
+    description: |-
+      The response data.
+    additionalProperties: true
+    example: {
+      "response-param": "value"
+    }
+  # We define other properties from the api_request.yaml schema to override their descriptions
+  # for context purposes
+  api:
+    type: string
+    enum: [fromWidget, toWidget]
+    description: The API the request was sent over.
+    example: "fromWidget"
+  requestId:
+    type: string
+    description: The request ID supplied in the original request.
+    example: "generated-id-1234"
+  action:
+    type: string
+    description: The action which was invoked.
+    example: "com.example.say_hello"
+required:
+  - response

@@ -1,0 +1,14 @@
+{
+  "$ref": "core/event.json",
+  "type": "m.widgets",
+  "content": {
+    "20200827_WidgetExample": {
+      "type": "m.widget",
+      "state_key": "20200827_WidgetExample",
+      "sender": "@alice:example.org",
+      "content": {
+        "$ref": "../../../api/widgets/examples/shared_props.json"
+      }
+    }
+  }
+}

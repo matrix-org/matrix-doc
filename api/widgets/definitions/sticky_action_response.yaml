@@ -1,0 +1,38 @@
+# Copyright 2020 The Matrix.org Foundation C.I.C.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type: object
+title: StickyActionResponse
+description: |-
+  Schema definition for a response to a ``StickyActionRequest``.
+allOf:
+  - $ref: "./api_response.yaml"
+  - $ref: "./sticky_action_request.yaml"
+properties:
+  response:
+    type: object
+    description: |-
+      The response data.
+    title: StickyActionResponseData
+    properties:
+      success:
+        type: boolean
+        description: |-
+          True to indicate the client was able to honour the request, false otherwise. The client
+          will only be able to honour the request if the widget is requesting to be set back to
+          the default behaviour, or if the widget is requesting to be on screen and no other widget
+          has done the same already. Permission errors relating to capabilities will result in an
+          error response instead of this response.
+        example: true
+    required: ['success']

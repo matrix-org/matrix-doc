@@ -1,0 +1,78 @@
+# Copyright 2020 The Matrix.org Foundation C.I.C.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type: object
+title: StickerActionBase
+properties:
+  api:
+    type: string
+    enum: ["fromWidget"]
+    description: "" # The enum will result in this being "Must be $0"
+    example: "fromWidget"
+  action:
+    type: string
+    enum: ["m.sticker"]
+    description: "" # The enum will result in this being "Must be $0"
+    example: "m.sticker"
+  data:
+    type: object
+    title: StickerActionRequestData
+    description: |-
+      Information about the sticker to send.
+    properties:
+      name:
+        type: string
+        description: |-
+          The human-readable name for the sticker.
+        example: "Smiling Face"
+      description:
+        type: string
+        description: |-
+          A longer form human-readable description for the sticker.
+        example: "A circular emoticon smiles blankly"
+      content:
+        type: object
+        title: StickerActionRequestEventContent
+        properties:
+          info:
+            type: object
+            # XXX: Ideally we'd link to the image info schema, but it has a bunch of backlinks which
+            # the widget spec cannot support.
+            title: ImageInfo
+            description: |-
+              Metadata about the image referred to in ``url`` including a thumbnail
+              representation. This value takes the same shape as ``ImageInfo`` as
+              defined for ``info`` on ``m.sticker`` events.
+            example: {
+              w: 512,
+              h: 512,
+              mimetype: "image/png",
+              size: 102400,
+              thumbnail_url: "mxc://example.org/def5678",
+              thumbnail_info: {
+                w: 256,
+                h: 256,
+                mimetype: "image/png",
+                size: 10240
+              }
+            }
+          url:
+            description: |-
+              The URL to the sticker image. This must be a valid ``mxc://`` URI.
+            type: string
+            example: "mxc://example.org/abc1234"
+        required:
+          - info
+          - url
+    required: ['content', 'name']

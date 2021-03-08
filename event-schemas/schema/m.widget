@@ -1,0 +1,18 @@
+---
+allOf:
+  - $ref: core-event-schema/state_event.yaml
+description: Defines a room widget. The event's content is ``WidgetCommonProperties``.
+properties:
+  content:
+    allOf:
+      - $ref: ../../api/widgets/definitions/shared_props.yaml
+      - title: EventContent  # We use an explicit name so the rendering makes sense
+    type: object
+  state_key:
+    description: The ID for the widget.
+    type: string
+  type:
+    enum:
+      - m.widget
+    type: string
+type: object

@@ -42,6 +42,7 @@ HTTP_APIS = {
     os.path.join(matrix_doc_dir, "api/identity"): "is",
     os.path.join(matrix_doc_dir, "api/push-gateway"): "push",
     os.path.join(matrix_doc_dir, "api/server-server"): "ss",
+    os.path.join(matrix_doc_dir, "api/widgets"): "widgets",
 }
 SWAGGER_DEFINITIONS = {
     os.path.join(matrix_doc_dir, "api/application-service/definitions"): "as",
@@ -49,6 +50,7 @@ SWAGGER_DEFINITIONS = {
     os.path.join(matrix_doc_dir, "api/identity/definitions"): "is",
     os.path.join(matrix_doc_dir, "api/push-gateway/definitions"): "push",
     os.path.join(matrix_doc_dir, "api/server-server/definitions"): "ss",
+    os.path.join(matrix_doc_dir, "api/widgets/definitions"): "widgets",
 }
 EVENT_EXAMPLES = os.path.join(matrix_doc_dir, "event-schemas/examples")
 EVENT_SCHEMA = os.path.join(matrix_doc_dir, "event-schemas/schema")
@@ -204,6 +206,11 @@ def get_json_schema_object_fields(obj, enforce_title=False):
     logger.debug("Processing object with title '%s'", obj_title)
 
     additionalProps = obj.get("additionalProperties")
+
+    # When 'additionalProps: true` is defined, it should be treated as a freeform object
+    if additionalProps == True:
+        additionalProps = dict(type="object", title="value")
+
     props = obj.get("properties")
     if additionalProps and not props:
         # not "really" an object, just a KV store
@@ -788,6 +795,7 @@ class MatrixUnits(Units):
         is_ver = substitutions.get("%IDENTITY_RELEASE_LABEL%", "unstable")
         as_ver = substitutions.get("%APPSERVICE_RELEASE_LABEL%", "unstable")
         push_gw_ver = substitutions.get("%PUSH_GATEWAY_RELEASE_LABEL%", "unstable")
+        widget_ver = substitutions.get("%WIDGET_RELEASE_LABEL%", "unstable")
 
         # we abuse the typetable to return this info to the templates
         return TypeTable(rows=[
@@ -811,6 +819,10 @@ class MatrixUnits(Units):
                 "`Push Gateway API <push_gateway/"+push_gw_ver+".html>`_",
                 push_gw_ver,
                 "Push notifications for Matrix events",
+            ), TypeTableRow(
+                "`Widgets <widgets/"+widget_ver+".html>`_",
+                widget_ver,
+                "Client-side embedded applications",
             ),
         ])
 
@@ -970,6 +982,7 @@ class MatrixUnits(Units):
             "client_server": substitutions.get("%CLIENT_RELEASE_LABEL%", "unstable"),
             "identity_service": substitutions.get("%IDENTITY_RELEASE_LABEL%", "unstable"),
             "push_gateway": substitutions.get("%PUSH_GATEWAY_RELEASE_LABEL%", "unstable"),
+            "widgets": substitutions.get("%WIDGETS_RELEASE_LABEL%", "unstable"),
             "application_service": substitutions.get("%APPSERVICE_RELEASE_LABEL%", "unstable"),
         }
 

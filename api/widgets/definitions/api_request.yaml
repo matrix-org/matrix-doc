@@ -1,0 +1,55 @@
+# Copyright 2020 The Matrix.org Foundation C.I.C.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type: object
+title: WidgetApiRequest
+description: |-
+  Schema definition for a widget request object over the Widget API.
+properties:
+  api:
+    type: string
+    enum: [fromWidget, toWidget]
+    description: |-
+      The API for which the request is to be sent over.
+    example: "fromWidget"
+  requestId:
+    type: string
+    description: |-
+      An opaque string which uniquely identifies the request in the context of the session.
+    example: "generated-id-1234"
+  action:
+    type: string
+    description: |-
+      The action to send to the other party. Custom actions can be sent using the Java package
+      naming convention as a namespace.
+    example: "com.example.say_hello"
+  widgetId:
+    type: string
+    description: |-
+      The widget's ID.
+    example: "20200827_WidgetExample"
+  data:
+    type: object
+    description: |-
+      The request data.
+    additionalProperties: true
+    example: {
+      "request-param": "value"
+    }
+required:
+  - api
+  - requestId
+  - action
+  - widgetId
+  - data

@@ -1,0 +1,35 @@
+[tool.towncrier]
+    filename = "../widgets.rst"
+    directory = "newsfragments"
+    issue_format = "`#{issue} <https://github.com/matrix-org/matrix-doc/issues/{issue}>`_"
+    title_format = "{version}"
+
+    [[tool.towncrier.type]]
+        directory = "breaking"
+        name = "Breaking Changes"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "deprecation"
+        name = "Deprecations"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "new"
+        name = "New Endpoints"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "removal"
+        name = "Removed Endpoints"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "feature"
+        name = "Backwards Compatible Changes"
+        showcontent = true
+
+    [[tool.towncrier.type]]
+        directory = "clarification"
+        name = "Spec Clarifications"
+        showcontent = true

@@ -1,0 +1,91 @@
+# Copyright 2020 The Matrix.org Foundation C.I.C.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type: object
+title: WidgetCommonProperties
+description: |-
+  Common properties for widgets regardless of where they exist.
+example:
+  $ref: "../examples/shared_props.json"
+properties:
+  id:
+    type: string
+    description: |-
+      An opaque, unique, UTF-8 identifier for the widget. Uniqueness and other requirements
+      are defined by the widget kind.
+    example: "20200827_WidgetExample"
+  creatorUserId:
+    type: string
+    description: |-
+      The user ID who originally created the widget. This varies from the user who last
+      edited the widget, which is typically represented by the ``sender`` on events.
+    example: "@alice:example.org"
+  name:
+    type: string
+    description: A human-readable name for the widget.
+    example: "My Cool Widget"
+  type:
+    type: string
+    description: The type of widget being represented.
+    example: "m.custom"
+  url:
+    type: string
+    description: |-
+      The URL where the widget can be loaded, including template variables. See the
+      `URL Templating`_ section for more information on templating.
+    example: "https://example.org/my/widget.html?roomId=$matrix_room_id"
+  waitForIframeLoad:
+    type: boolean
+    default: true
+    description: |-
+      When true, the widget should be hidden from view until the iframe's ``onLoad`` (or
+      platform equivalent) event has been fired. When false, the widget should be hidden
+      from view until the ``content_loaded`` API action is sent by the widget. Defaults to
+      true.
+    example: true
+  avatar_url:
+    type: string
+    description: |-
+      An optional MXC URI to an image which can be used to identify the widget. Recommended
+      for use alongside the ``name`` and ``data.title``.
+
+      Images SHOULD be legible at small sizes, such as 20x20 pixels. The MXC URI here should
+      be the source material to allow clients to use the ``/thumbnail`` endpoint on the media.
+    example: "mxc://example.org/aaabbbccc"
+  data:
+    type: object
+    title: WidgetData
+    description: |-
+      Additional metadata for the widget. The widget can receive these in their URL safely
+      by using template variables. Note that some widget types may result in this property
+      being required.
+
+      See the `URL Templating`_ section for more information on templating.
+    properties:
+      title:
+        type: string
+        description: |-
+          A human-readable title for the widget primarily shown next to the widget's name.
+        example: "This is a witty description for the widget"
+    additionalProperties: true
+    example: {
+      "title": "This is a witty description for the widget",
+      "custom-key": "This is a custom key"
+    }
+
+required:
+  - id
+  - creatorUserId
+  - type
+  - url

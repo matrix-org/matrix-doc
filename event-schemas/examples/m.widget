@@ -1,0 +1,8 @@
+{
+  "$ref": "core/state_event.json",
+  "type": "m.widget",
+  "state_key": "20200827_WidgetExample",
+  "content": {
+    "$ref": "../../../api/widgets/examples/shared_props.json"
+  }
+}
