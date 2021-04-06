@@ -18,8 +18,9 @@ properties:
   pdus:
     type: array
     description: |-
-      A single PDU. Note that events have a different format depending on the room
-      version - check the `room version specification`_ for precise event formats.
+      An array with a single PDU. Note that events have a different format depending
+      on the room version - check the `room version specification`_ for precise
+      event formats.
     items:
       type: object
       title: PDU
