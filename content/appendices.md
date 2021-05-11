@@ -366,6 +366,46 @@ Some identifiers are specific to given room versions, please refer to
 the [room versions specification](/#room-versions) for more
 information.
 
+### Standard Identifier Format
+
+Throughout the specification some identifiers will mention they use the
+"Standard Identifier Format", which is a common definition for how
+identifiers are to be represented. Identifiers which are not explicitly
+listed in this specification or do not use the Standard Identifier Format
+have undefined grammar.
+
+The requirements of identifiers using this format are:
+
+ * An identifier may not be less than one character or more than 255 characters
+   in length.
+ * Identifiers must start with one of the characters `[a-z]`, and be entirely
+   composed of the characters `[a-z]`, `[0-9]`, `-`, `_` and `.`.
+ * Identifiers starting with the characters `m.` are reserved.
+ * Identifiers which are not described in the specification should follow the
+   Java Package Naming Convention to namespace their identifier. This is typically
+   a reverse DNS format, such as `com.example.identifier`.
+
+This identifier format is intended for solely non-user-visible identifiers.
+
+{{% boxes/note %}}
+Identifiers which are accepted into the specification through the proposal process
+are assumed to use this Standard Identifier Format unless explicitly mentioned
+otherwise in the proposal.
+{{% /boxes/note %}}
+
+{{% boxes/note %}}
+Identifiers can and do inherit grammar from this specification. For example, "this
+identifier uses the Standard Identifier Format, though without the namespacing
+requirements" - this means that `m.` is still reserved, but that implementations
+do not have to use the reverse DNS scheme to namespace their custom identifier.
+{{% /boxes/note %}}
+
+{{% boxes/rationale %}}
+ASCII characters do not have issues with homoglyphs or alternative encodings which
+might interfere with the identifier's purpose. Additionally, using lowercase
+characters prevents concerns about case sensitivity.
+{{% /boxes/rationale %}}
+
 ### Server Name
 
 A homeserver is uniquely identified by its server name. This value is
