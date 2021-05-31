@@ -1,4 +1,4 @@
-# MSC3225: Per Room Spellcheck Language
+# MSC3226: Per Room Spellcheck Language
 
 It is common for people on the Internet to talk in more than one language. English will probably be
 the most used one, but for many it is not their mother tongue and they will use the latter as well.
