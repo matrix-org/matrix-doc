@@ -18,6 +18,7 @@ type: object
 properties:
   base_url:
     type: string
+    format: uri
     description: The base URL for the identity server for client-server connections.
     example: https://identity.example.com
 required:
