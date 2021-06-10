@@ -154,6 +154,7 @@ paths:
               properties:
                 submit_url:
                   type: string
+                  format: uri
                   description: |-
                     An optional field containing a URL where the client must
                     submit the validation token to, with identical parameters
