@@ -68,6 +68,7 @@ properties:
             rules like any other user.
         avatar_url:
           type: string
+          format: uri
           description: The URL for the room's avatar, if one is set.
         join_rule:
           type: string
