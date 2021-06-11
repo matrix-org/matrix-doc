@@ -74,6 +74,7 @@ paths:
           x-example: "@alice:example.com"
         - in: body
           name: body
+          required: true
           schema:
             type: object
             example: {

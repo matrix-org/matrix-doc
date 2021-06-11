@@ -49,6 +49,7 @@ paths:
           x-example: "$something:example.org"
         - in: body
           name: body
+          required: true
           schema:
             type: object
             example: {
