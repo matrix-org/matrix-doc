@@ -603,24 +603,133 @@ homeserver to look up the alias.
 Room aliases MUST NOT exceed 255 bytes (including the `#` sigil and the
 domain).
 
-#### matrix.to navigation
+#### URIs
+
+There are two major kinds of referring to a resource in Matrix: matrix.to
+and `matrix:` URI. The specification currently defines both as active/valid
+ways to refer to entities/resources.
+
+Rooms, users, aliases, and groups may be represented as a URI. This URI can
+be used to reference particular objects in a given context, such as mentioning
+a user in a message or linking someone to a particular point in the room's
+history (a permalink).
+
+##### Matrix URI scheme
+
+The Matrix URI scheme is defined as follows (`[]` enclose optional parts, `{}`
+enclose variables):
+```
+matrix:[//{authority}/]{type}/{id without sigil}[/{type}/{id without sigil}...][?{query}][#{fragment}]
+```
+
+As a schema, this can be represented as:
+
+```
+MatrixURI = "matrix:" hier-part [ "?" query ] [ "#" fragment ]
+hier-part = [ "//" authority "/" ] path
+
+path = entity-descriptor ["/" entity-descriptor]
+entity-descriptor = nonid-segment / type-qualifier id-without-sigil
+nonid-segment = segment-nz ; as defined in RFC 3986
+type-qualifier = segment-nz "/" ; as defined in RFC 3986
+id-without-sigil = string ; as defined in Matrix identifier spec above
+
+query = query-element *( "&" query-item )
+query-item = action / routing / custom-query-item
+action = "action=" ( "join" / "chat" )
+routing = "via=” authority
+custom-query-item = custom-item-name "=" custom-item-value
+custom-item-name = 1*unreserved ; reverse-DNS name
+custom-item-value =
+```
+
+Note that this format is deliberately following [RFC 3986](https://tools.ietf.org/html/rfc3986)
+to ensure maximum compatibility with existing tooling. The scheme name (`matrix`) is
+registered with the IANA [here](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml).
+
+Currently, the `authority` and `fragment` are unused by this specification,
+though are reserved for future use. Matrix does not have a central authority which
+could reasonably fill the `authority` role. `nonid-segment` in the schema is
+additionally reserved for future use.
+
+The `type` denotes the kind of entity which is described by `id without sigil`.
+Specifically, the following mappings are used:
+
+* `r` for room aliases.
+* `u` for users.
+* `roomid` for room IDs (note the distinction from room aliases).
+* `e` for events, when after a room reference (`r` or `roomid`).
 
 {{% boxes/note %}}
-This namespacing is in place pending a `matrix://` (or similar) URI
-scheme. This is **not** meant to be interpreted as an available web
-service - see below for more details.
+During development of this URI format, types of `user`, `room`, and `event`
+were used: these MUST NOT be produced any further, though implementations might
+wish to consider handling them as `u`, `r`, and `e` respectively.
 {{% /boxes/note %}}
 
-Rooms, users, aliases, and groups may be represented as a "matrix.to"
-URI. This URI can be used to reference particular objects in a given
-context, such as mentioning a user in a message or linking someone to a
-particular point in the room's history (a permalink).
+The `id without sigil` is simply the identifier for the entity without the defined
+sigil. For example, `!room:example.org` becomes `room:example.org` (`!` is the sigil
+for room IDs). The sigils are described under the
+[Common Identifier Format](#common-identifier-format).
+
+The `query` is optional and helps clients with processing the URI's intent. In
+this specification are the following:
+
+* `action` - Helps provide intent for what the client should do specifically with
+  the URI. Lack of an `action` simply indicates that the URI is identifying a resource
+  and has no suggested action associated with it - clients could treat this as
+  navigating the user to an informational page, for example.
+  * `action=join` - Describes an intent for the client to join the room described
+    by the URI and thus is only valid on URIs which are referring to a room (it
+    has no meaning and is ignored otherwise). The client should prompt for confirmation
+    prior to joining the room, if the user isn't already part of the room.
+  * `action=chat` - Describes an intent for the client to start/open a DM with
+    the user described by the URI and thus is only valid on URIs which are referring
+    to a user (it has no meaning and is ignored otherwise). Clients supporting a
+    form of Canonical DMs should reuse existing DMs instead of creating new ones
+    if available. The client should prompt for confirmation prior to creating the
+    DM, if the user isn't being redirected to an existing canonical DM.
+* `via` - Can be used to denote which servers (authorities) to attempt to resolve
+  the resource through, or take `action` through. An example of using `via` for
+  routing Room IDs is described [below](#routing), and is encouraged for use in
+  Matrix URIs referring to a room ID. Matrix URIs can additionally use this `via`
+  parameter for non-public federation resolution of identifiers (i.e.: listing a
+  server which might have information about the given user).
+
+<!-- TODO @TR: Link to "standard identifier format" when it exists -->
+Custom query parameters can be specified using the Standard Identifier Format and
+appropriately encoding their values. Specifically, "percent encoding" and encoding
+of the `&` are required. Where custom parameters conflict with specified ones,
+clients should prefer the specified parameters. Clients should strive to maintain
+consistency across custom parameters as users might be using multiple different
+clients across multiple different authors. Useful and mission-aligned custom
+parameters should be proposed to be included in this specification.
+
+Examples of common URIs are:
+
+* Room alias: `matrix:r/somewhere:example.org`
+* Room ID: `matrix:roomid/somewhere:example.org?via=elsewhere.ca`
+* Permalink by room: `matrix:r/somewhere:example.org/e/event:example.org`
+* Permalink by room ID: `matrix:roomid/somewhere:example.org/e/event:example.org?via=elsewhere.ca`
+* User: `matrix:u/alice:example.org?action=chat`
+
+A suggested client implementation algorithm is available in the
+[original MSC](https://github.com/matrix-org/matrix-doc/pull/2312/files#diff-f4ae31b823cdbeac105bd4b6526b3da8f6db03ae29847e1c7916b9ac51997fdfR363)
+(line 363).
+
+##### matrix.to navigation
+
+{{% boxes/note %}}
+This namespacing existed prior to a `matrix:` scheme. This is **not**
+meant to be interpreted as an available web service - see below for more
+details.
+{{% /boxes/note %}}
 
 A matrix.to URI has the following format, based upon the specification
-defined in RFC 3986:
+defined in [RFC 3986](https://tools.ietf.org/html/rfc3986):
 
-> <https://matrix.to/#/>&lt;identifier&gt;/&lt;extra
-> parameter&gt;?&lt;additional arguments&gt;
+```
+https://matrix.to/#/<identifier>/<extra parameter>?<additional arguments>
+```
 
 The identifier may be a room ID, room alias, user ID, or group ID. The
 extra parameter is only used in the case of permalinks where an event ID
@@ -677,17 +786,14 @@ may not be encoded).
 
 Room IDs are not routable on their own as there is no reliable domain to
 send requests to. This is partially mitigated with the addition of a
-`via` argument on a matrix.to URI, however the problem of routability is
+`via` argument on a URI, however the problem of routability is
 still present. Clients should do their best to route Room IDs to where
 they need to go, however they should also be aware of [issue
 \#1579](https://github.com/matrix-org/matrix-doc/issues/1579).
 
 A room (or room permalink) which isn't using a room alias should supply
-at least one server using `via` in the `<additional arguments>`, like
-so:
-`https://matrix.to/!somewhere%3Aexample.org?via=example.org&via=alt.example.org`.
-The parameter can be supplied multiple times to specify multiple servers
-to try.
+at least one server using `via` in the URI's query string. Multiple servers
+can be specified by including multuple `via` parameters.
 
 The values of `via` are intended to be passed along as the `server_name`
 parameters on the Client Server `/join` API.
