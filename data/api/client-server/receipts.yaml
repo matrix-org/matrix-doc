@@ -61,6 +61,7 @@ paths:
           description: |-
             Extra receipt information to attach to `content` if any. The
             server will automatically set the `ts` field.
+          required: true
           schema:
             type: object
             example: {
