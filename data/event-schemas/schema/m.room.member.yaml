@@ -45,6 +45,7 @@ properties:
       avatar_url:
         description: 'The avatar URL for this user, if any.'
         type: string
+        format: uri
       displayname:
         description: 'The display name for this user, if any.'
         type:

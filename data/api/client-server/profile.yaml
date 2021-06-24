@@ -129,6 +129,7 @@ paths:
             properties:
               avatar_url:
                 type: string
+                format: uri
                 description: The new avatar URL for this user.
       responses:
         200:
@@ -170,6 +171,7 @@ paths:
             properties:
               avatar_url:
                 type: string
+                format: uri
                 description: The user's avatar URL if they have set one, otherwise not present.
         404:
           description: There is no avatar URL for this user or this user does not exist.
@@ -204,6 +206,7 @@ paths:
             properties:
               avatar_url:
                 type: string
+                format: uri
                 description: The user's avatar URL if they have set one, otherwise not present.
               displayname:
                 type: string

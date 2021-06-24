@@ -238,6 +238,7 @@ paths:
                                         title: Display name
                                       avatar_url:
                                         type: string
+                                        format: uri
                                         title: Avatar Url
                                 events_before:
                                   type: array

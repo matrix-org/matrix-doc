@@ -113,6 +113,7 @@ paths:
                       properties:
                         url:
                           type: string
+                          format: uri
                           description: |-
                             Required if `kind` is `http`. The URL to use to send
                             notifications to.
@@ -220,6 +221,7 @@ paths:
                 properties:
                   url:
                     type: string
+                    format: uri
                     description: |-
                       Required if `kind` is `http`. The URL to use to send
                       notifications to. MUST be an HTTPS URL with a path of

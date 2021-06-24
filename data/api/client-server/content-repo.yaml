@@ -360,6 +360,7 @@ paths:
       parameters:
         - in: query
           type: string
+          format: uri
           x-example: "https://matrix.org"
           name: url
           description: "The URL to get a preview of."
@@ -389,6 +390,7 @@ paths:
                   The byte-size of the image. Omitted if there is no image attached.
               "og:image":
                 type: string
+                format: uri
                 description: |-
                   An [MXC URI](/client-server-api/#matrix-content-mxc-uris) to the image. Omitted if there is no image.
           examples:

@@ -18,6 +18,7 @@ type: object
 properties:
   base_url:
     type: string
+    format: uri
     description: The base URL for the homeserver for client-server connections.
     example: https://matrix.example.com
 required:
