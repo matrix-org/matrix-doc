@@ -22,7 +22,7 @@ python3 download_google_fonts_css.py \
   
 Which would pop out a `Inter.css` file that should be `@import url("Inter.css")`d
 somewhere in the site's SCSS (currently in
-[/assets-hugo/scss/_variables_project.scss](/assets-hugo/scss/_variables_project.scss)).
+[/assets/scss/_variables_project.scss](/assets/scss/_variables_project.scss)).
 
 Re-running the script and committing any new files is only necessary when a desired 
 font updates (not very often), or we want to change the font we're using. In that case,

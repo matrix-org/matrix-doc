@@ -12,10 +12,6 @@ theme = ["docsy"]
 
 disableKinds = ["taxonomy", "taxonomyTerm"]
 
-# Change the default for assets, because the old Python toolchain uses "assets" for build output.
-# When the old toolchain is retired we can switch back to the default here.
-assetDir = "assets-hugo"
-
 [languages]
 [languages.en]
 title = "Matrix Specification"
