@@ -1,0 +1,14 @@
+sequenceDiagram
+  participant C as Client
+  participant S as Server
+  participant O as Origin
+  C->>S: req file
+  activate S
+  opt fetch file
+    S->>O: req file
+    activate O
+    O-->>S: serve file
+    deactivate O
+  end
+  S-->>C: serve file
+  deactivate S

@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant C as Client
+    participant S as Server
+    C->>S: upload file
+    activate S
+    S->>S: calculate CID
+    S-->>C: return MXC URL with CID
+    deactivate S
+
+    opt verify CID
+      C->>C: verify the CID
+    end
+
+    C->>S: send event with MXC URL
+    activate S
+    S-->>C: event ID
+    deactivate S

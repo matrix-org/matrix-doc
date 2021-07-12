@@ -1,0 +1,21 @@
+sequenceDiagram
+  participant C as Client
+  participant S as Server
+  participant R as Remote
+  C->>S: req file with CID and hint
+  Note over C,S: The (optional) hint is a room+event ID
+  activate S
+  opt fetch file from remote
+    loop try potential remotes
+      S->>R: req file
+      activate R
+      R-->>S: serve file
+      deactivate R
+    end
+  end
+  S->>S: verify the CID
+  S-->>C: serve file
+  deactivate S
+  opt verify CID
+    C->>C: verify the CID
+  end

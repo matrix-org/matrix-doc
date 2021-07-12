@@ -1,0 +1,7 @@
+sequenceDiagram
+  participant C as Client
+  participant S as Server
+  C->>S: upload file
+  S-->>C: return MXC URL
+  C->>S: send event with MXC URL
+  S-->>C: return event ID
